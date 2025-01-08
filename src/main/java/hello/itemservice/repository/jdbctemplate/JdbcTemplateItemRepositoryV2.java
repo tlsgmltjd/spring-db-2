@@ -56,7 +56,7 @@ public class JdbcTemplateItemRepositoryV2 implements ItemRepository {
 
     @Override
     public void update(Long itemId, ItemUpdateDto updateParam) {
-        String sql = "UPDATE item SET item_name = :itemName, price = :price, quantity = :quantity from item WHERE id = :id";
+        String sql = "UPDATE item SET item_name = :itemName, price = :price, quantity = :quantity WHERE id = :id";
 
         // BeanPropertySqlParameterSource 써도 되고 MapSqlParameterSource 써도 됨
         MapSqlParameterSource param = new MapSqlParameterSource()
