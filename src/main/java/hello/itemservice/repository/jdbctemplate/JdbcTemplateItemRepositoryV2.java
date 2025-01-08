@@ -70,7 +70,7 @@ public class JdbcTemplateItemRepositoryV2 implements ItemRepository {
 
     @Override
     public Optional<Item> findById(Long id) {
-        String sql = "select id, item_name, price, quantity from item where id = :id";
+        String sql = "select id, item_name as itemName, price, quantity from item where id = :id";
         try {
             Map<String, Long> param = Map.of("id", id); // map 자료구로도 param 만들 수 있음
             Item item = jdbcTemplate.queryForObject(sql, param, itemRowMapper());
@@ -88,7 +88,7 @@ public class JdbcTemplateItemRepositoryV2 implements ItemRepository {
 
         BeanPropertySqlParameterSource param = new BeanPropertySqlParameterSource(cond);
 
-        String sql = "select id, item_name, price, quantity from item";
+        String sql = "select id, item_name as itemName, price, quantity from item";
 
         // 동적쿼리..
         if (StringUtils.hasText(itemName) || maxPrice != null) {
@@ -113,6 +113,8 @@ public class JdbcTemplateItemRepositoryV2 implements ItemRepository {
     }
 
     // resultset을 순회하여 엔티티 객체로 mapping 해준다.
+    // -> db, 자바 관례의 불일치를 BeanPropertyRowMapper가 바꿔준다. 스네이크 케이스 -> 카멜 케이스 (ex. item_name -> itemName mapping)
+    // db, 자바 별칭이 완전 다를 때는 as 로 alias를 주고 조회하면 됨
     private RowMapper<Item> itemRowMapper() {
         return BeanPropertyRowMapper.newInstance(Item.class);
     }
