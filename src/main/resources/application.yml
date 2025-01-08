@@ -1,0 +1,12 @@
+spring:
+  profiles:
+    active: local
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/springdb2
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 12345
+
+# show jdbc template sql log
+logging.level.org.springframework.jdbc: debug
