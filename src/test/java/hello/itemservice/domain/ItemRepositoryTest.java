@@ -11,26 +11,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+// 해당 어노테이션은 테스트에서 동작하면 테스트를 트랜잭션 안에서 실행하고 테스트 종료 후 자동으로 rollback 해줌
+// 각각의 테스트는 격리되어야하고 여러번 항상 같은 결과를 내야한다. <- tx rollback으로 해결할 수 있음
+@Transactional
 @SpringBootTest
 class ItemRepositoryTest {
 
     @Autowired
     ItemRepository itemRepository;
 
-    @Autowired
-    PlatformTransactionManager transactionManager;
-    TransactionStatus transactionStatus;
-
-    @BeforeEach
-    void beforeEach() {
-        transactionStatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
-    }
+//    @Autowired
+//    PlatformTransactionManager transactionManager;
+//    TransactionStatus transactionStatus;
+//
+//    @BeforeEach
+//    void beforeEach() {
+//        transactionStatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
+//    }
 
     @AfterEach
     void afterEach() {
@@ -40,7 +44,7 @@ class ItemRepositoryTest {
         }
 
         // 트랜잭션 롤백
-        transactionManager.rollback(transactionStatus);
+//        transactionManager.rollback(transactionStatus);
     }
 
     @Test
