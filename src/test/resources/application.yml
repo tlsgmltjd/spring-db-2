@@ -10,3 +10,10 @@ spring:
 
 # show jdbc template sql log
 logging.level.org.springframework.jdbc: debug
+
+# Mybatis
+mybatis:
+  type-aliases-package: hello.itemserice.domain
+  configuration:
+    map-underscore-to-camel-case: true
+logging.level.hello.itemservice.repository.mybatis: trace
