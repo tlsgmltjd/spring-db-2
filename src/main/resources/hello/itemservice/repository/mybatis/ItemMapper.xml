@@ -4,36 +4,36 @@
 <mapper namespace="hello.itemservice.repository.mybatis.ItemMapper">
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        insert into item (item_name, price, qauntity)
-        values (#{itemName}, #{price}, ${qauntity})
+        insert into item (item_name, price, quantity)
+        values (#{itemName}, #{price}, ${quantity})
     </insert>
 
     <update id="update">
         update item
         set item_name = #{updateParam.itemName},
             price = #{updateParam.price},
-            qauntity = #{updateParam.qauntity}
+            quantity = #{updateParam.quantity}
         where id = #{id}
     </update>
 
     <select id="findById" resultType="Item">
-        select id, item_name, price, qauntity
+        select id, item_name, price, quantity
         from item
         where id = #{id}
     </select>
 
     <select id="findAll" resultType="Item">
-        select id, item_name, price, qauntity
+        select id, item_name, price, quantity
         from item
 
         <where>
 
             <if test="itemName != null and itemName != ''">
-                and item_name like concat('%', ${itemName}, '%')
+                and item_name like concat('%', #{itemName}, '%')
             </if>
 
             <if test="maxPrice != null">
-                and price $lt;= #{maxPrice}
+                and price &lt;= #{maxPrice}
             </if>
 
         </where>
